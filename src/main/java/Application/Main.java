@@ -3,7 +3,7 @@ package Application;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-package Application;
+import Application.Main;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +26,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        Main.main(args);
         launch(args);
     }
 }
