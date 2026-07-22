@@ -1,67 +1,57 @@
 package Controller;
+
+import Application.Main;
 import Database.DBConnection;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
 public class RegisterController {
 
-    @FXML
-    private TextField txtFullName;
+    @FXML private TextField txtUsername;
+    @FXML private PasswordField txtPassword;
+    @FXML private PasswordField txtConfirmPassword;
+    @FXML private Label lblMessage;
 
     @FXML
-    private TextField txtUsername;
+    private void handleRegister() {
+        String user = txtUsername.getText().trim();
+        String pass = txtPassword.getText().trim();
+        String confirm = txtConfirmPassword.getText().trim();
 
-    @FXML
-    private PasswordField txtPassword;
+        if (user.isEmpty() || pass.isEmpty() || confirm.isEmpty()) {
+            lblMessage.setText("Please complete all fields.");
+            return;
+        }
 
-    @FXML
-    private ComboBox<String> cmbRole;
+        if (!pass.equals(confirm)) {
+            lblMessage.setText("Passwords do not match.");
+            return;
+        }
 
-    @FXML
-    public void initialize() {
+        String query = "INSERT INTO users (username, password, fullname) VALUES (?, ?, ?)";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
 
-        cmbRole.getItems().add("Admin");
-        cmbRole.getItems().add("Receptionist");
+            stmt.setString(1, user);
+            stmt.setString(2, pass);
+            stmt.setString(3, user); // Uses username as placeholder for fullname
+            stmt.executeUpdate();
 
-    }
-
-
-    @FXML
-    public void onBackClicked() {
-
-        System.out.println("Back button clicked");
-
-    }
-    @FXML
-    public void onRegisterClicked() {
-
-        try {
-
-            Connection con = DBConnection.getConnection();
-
-            String sql =
-                    "INSERT INTO users(fullname,username,password,role) VALUES(?,?,?,?)";
-
-            PreparedStatement ps = con.prepareStatement(sql);
-
-            ps.setString(1, txtFullName.getText());
-            ps.setString(2, txtUsername.getText());
-            ps.setString(3, txtPassword.getText());
-            ps.setString(4, cmbRole.getValue());
-
-            ps.executeUpdate();
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Registration Successful!");
-            alert.show();
+            lblMessage.setStyle("-fx-text-fill: green;");
+            lblMessage.setText("Registration successful!");
+            Main.switchScene("/View/Login.fxml", "Login");
 
         } catch (Exception e) {
             e.printStackTrace();
+            lblMessage.setText("Database insertion failed.");
         }
-
     }
 
-
+    @FXML
+    private void goToLogin() {
+        Main.switchScene("/View/Login.fxml", "Login");
+    }
 }

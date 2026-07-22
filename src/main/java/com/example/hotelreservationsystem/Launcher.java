@@ -1,9 +1,9 @@
 package com.example.hotelreservationsystem;
 
-import javafx.application.Application;
+import Application.Main;
 
 public class Launcher {
     public static void main(String[] args) {
-        Application.launch(Application.class, args);
+        Main.main(args);
     }
 }

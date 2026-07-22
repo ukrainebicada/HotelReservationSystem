@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
-   <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Register Account">
-               <font>
-                  <Font size="28.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtFullname" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="300.0" promptText="Full name" />
-            <TextField fx:id="txtUsername" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="300.0" promptText="Username" />
-            <PasswordField fx:id="txtPassword" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="300.0" promptText="Password" />
-            <ComboBox fx:id="cmbRole" prefWidth="150.0" />
-            <Button fx:id="btnRegister" mnemonicParsing="false" onAction="#onRegisterClicked" text="Register" />
-            <Button fx:id="btnBack" mnemonicParsing="false" onAction="#onBackClicked" text="Back to Login" />
-         </children>
-      </VBox>
-   </center>
-</BorderPane>
+<VBox alignment="CENTER" spacing="12.0" prefWidth="400.0" prefHeight="450.0"
+      xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="Controller.RegisterController">
+   <padding>
+      <Insets top="30" right="30" bottom="30" left="30"/>
+   </padding>
+
+   <Label text="Create Account">
+      <font><Font name="System Bold" size="22.0"/></font>
+   </Label>
+
+   <TextField fx:id="txtUsername" promptText="Choose Username"/>
+   <PasswordField fx:id="txtPassword" promptText="Choose Password"/>
+   <PasswordField fx:id="txtConfirmPassword" promptText="Confirm Password"/>
+
+   <Label fx:id="lblMessage" textFill="RED"/>
+
+   <Button text="Register" onAction="#handleRegister" prefWidth="200.0"
+           style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+   <Button text="Back to Login" onAction="#goToLogin" prefWidth="200.0"/>
+</VBox>
